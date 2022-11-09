@@ -24,7 +24,7 @@ tasks:
       clear
   - name: docker
     command: |
-        docker pull rocker/tidyverse:latest  && docker run --rm -ti -e PASSWORD=tigem -p 8787:8787 rocker/tidyverse:latest
+        docker pull rocker/tidyverse:latest  && docker run --rm -ti -e ROOT=true -e PASSWORD=tigem -p 8787:8787 rocker/tidyverse:latest
  
 ports:
   - name: Web R
