@@ -22,6 +22,14 @@ tasks:
       export PS1='\[\e[3;36m\]${PWD/*\//} ->\[\e[0m\] '
       unset JAVA_TOOL_OPTIONS
       clear
+  - name: docker
+      openMode: split-left
+      command: docker build -t hello . && docker run --rm -ti -p 8787:8787 rocker/rstudio
+ 
+ ports:
+  - port: 8080
+    onOpen: open-browser
+    visibility: public
       
 vscode:
   extensions: # based on nf-core.nf-core-extensionpack
