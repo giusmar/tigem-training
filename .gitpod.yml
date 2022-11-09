@@ -16,20 +16,20 @@ github:
     addBadge: false
 
 tasks:
-  - name: Start Gitpod
+  - name: docker
+    command: |
+        docker pull rocker/tidyverse:latest  && docker run --rm -ti -e ROOT=true -e PASSWORD=tigem -p 8787:8787 rocker/tidyverse:latest
+    - name: Start Gitpod
     command: |
       source $HOME/.bashrc
       export PS1='\[\e[3;36m\]${PWD/*\//} ->\[\e[0m\] '
       unset JAVA_TOOL_OPTIONS
       clear
-  - name: docker
-    command: |
-        docker pull rocker/tidyverse:latest  && docker run --rm -ti -e ROOT=true -e PASSWORD=tigem -p 8787:8787 rocker/tidyverse:latest
  
 ports:
   - name: Web R
     port: 8787
-    onOpen: open-browser
+    onOpen: notify
       
 vscode:
   extensions: # based on nf-core.nf-core-extensionpack
