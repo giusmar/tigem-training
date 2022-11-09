@@ -23,7 +23,6 @@ tasks:
       unset JAVA_TOOL_OPTIONS
       clear
   - name: docker
-      openMode: split-left
       command: docker build -t hello . && docker run --rm -ti -p 8787:8787 rocker/rstudio
  
  ports:
