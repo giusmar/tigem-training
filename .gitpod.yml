@@ -19,9 +19,9 @@ tasks:
   - name: Build rnaseq docker image
     command: docker build -t rnaseq -f rnaseqdocker .
   - name: Build rstudio server container
-    command: docker build -t rstudio -f rstudioserver . && \
+    command: |
       docker run --rm -d -ti -e ROOT=true -e PASSWORD=tigem \
-      -v /workspace/tigem-training/:/data/rnaseq/:z -p 8787:8787 rstudio
+      -v /workspace/tigem-training/:/data/rnaseq/:z -p 8787:8787 rocker/tidyverse:latest
   - name: Start Gitpod
     command: |
       source $HOME/.bashrc
