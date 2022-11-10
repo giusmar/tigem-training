@@ -16,18 +16,18 @@ github:
     addBadge: false
 
 tasks:
-  - name: Start Gitpod
-    command: |
-      source $HOME/.bashrc
-      export PS1='\[\e[3;36m\]${PWD/*\//} ->\[\e[0m\] '
-      unset JAVA_TOOL_OPTIONS
-      clear
   - name: Build rnaseq docker image
     command: docker build -t rnaseq -f rnaseqdocker .
   - name: Build rstudio server container
     command: docker build -t rstudio -f rstudioserver . && \
       docker run --rm -d -ti -e ROOT=true -e PASSWORD=tigem \
       -v /workspace/tigem-training/:/data/rnaseq/:z -p 8787:8787 rstudio
+  - name: Start Gitpod
+    command: |
+      source $HOME/.bashrc
+      export PS1='\[\e[3;36m\]${PWD/*\//} ->\[\e[0m\] '
+      unset JAVA_TOOL_OPTIONS
+      clear
  
 ports:
   - name: Web R
