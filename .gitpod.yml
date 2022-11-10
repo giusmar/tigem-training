@@ -24,6 +24,10 @@ tasks:
       clear
   - name: Build rnaseq docker image
     command: docker build -t rnaseq -f rnaseqdocker .
+  - name: Build rstudio server container
+    command: docker build -t rstudio -f rstudioserver . && \
+      docker run --rm -d -ti -e ROOT=true -e PASSWORD=tigem \
+      -v /workspace/tigem-training/:/data/rnaseq/:z -p 8787:8787 rstudio
  
 ports:
   - name: Web R

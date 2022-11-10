@@ -1,0 +1,1 @@
+docker run --rm -d -ti -e ROOT=true -e PASSWORD=tigem -v /workspace/tigem-training/:/data/rnaseq/:z -w /data/rnaseq/ -p 8787:8787 rocker/tidyverse:latest
