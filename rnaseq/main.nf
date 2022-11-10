@@ -13,14 +13,15 @@ process fastqc {
     }
 
     input:
-    path(read)
+    tuple val(sample_id), path(read)
 
     output:
-    path("${read}_fastqc.{zip,html}"), emit: qc
+    tuple val(sample_id), path("${read}_fastqc.{zip,html}"), emit: qc
 
     script:
     """
-    fastqc ${read}
+    ln -s ${reads} ${sample_id}.fastq.gz
+    fastqc ${sample_id}.fastq.gz
     """
 }
 
@@ -35,15 +36,15 @@ process align {
     }
 
     input:
+    tuple val(sample_id), path(read)
     path(fasta)
-    path(reads)
 
     output:
-    path('*.sam'), emit: mapped
+    tuple val(sample_id), path("${sample_id}_aligned_reads.sam"), emit: aligned
 
     script:
     """
-    bwa mem -M ${fasta} ${reads[0]} ${reads[1]} -o ${sample_id}_${rep}_aligned_reads.sam
+    bwa mem ${fasta} ${read} -o ${sample_id}_aligned_reads.sam
     """
 }
 
@@ -53,6 +54,7 @@ workflow {
     // ch_fastq.view()
 
     fastqc(ch_fastq)
+    align(ch_fastq,ch_fasta)
 
 
 }
