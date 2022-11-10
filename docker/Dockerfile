@@ -1,0 +1,26 @@
+# IMAGE
+FROM ubuntu:22.10
+
+# ENVIRONMENT
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+# ARGUMENT
+ARG DEBIAN_FRONTEND=noninteractive
+
+# APT UPDATE
+RUN apt-get -yqq update && apt-get -yqq upgrade
+
+# APT BASE TOOL
+RUN apt-get install -yqq apt-utils build-essential ca-certificates software-properties-common
+
+# APT TOOL
+RUN apt-get install -yqq python3 python3-pip default-jdk
+RUN apt-get install -yqq python-is-python3
+RUN apt-get install -yqq wget curl gzip gawk bzip2 git libz-dev
+
+# ANALYSIS TOOL
+RUN apt-get install -yqq samtools bedtools bamtools
+
+# FASTQC
+RUN apt-get install -yqq fastqc multiqc bwa
