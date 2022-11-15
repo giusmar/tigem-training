@@ -84,7 +84,6 @@ workflow {
     align(ch_fastq,ch_fasta.collect())
 
     // Generate a single report with multiqc
-    ch_multiqc_input = fastqc.out.qc.collect{ it[1][[1]] },align.out.aligned.collect{ it[1] }
-    report(ch_multiqc_input)
+    report(fastqc.out.qc.collect{ it[1][[1]] },align.out.aligned.collect{ it[1])
 
 }
