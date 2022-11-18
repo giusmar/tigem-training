@@ -48,29 +48,6 @@ process trimming {
     """
 }
 
-// process align {
-//     label 'alignment'
-//     tag 'BWA'
-//     publishDir "$params.outdir" , mode: 'copy',
-//     saveAs: {filename ->
-//             if (filename.indexOf("sam") > 0)     "bwa/align/$filename"
-//         else null            
-//     }
-
-//     input:
-//     tuple val(sample_id), path(read)
-//     path(fasta)
-
-//     output:
-//     tuple val(sample_id), path("${sample_id}_aligned.sam"), emit: aligned
-
-//     script:
-//     """
-//     bwa index ${fasta}
-//     bwa mem ${fasta} ${read} -o ${sample_id}_aligned.sam
-//     """
-// }
-
 process genomegenerate {
     label 'GGenerate'
     tag 'STAR'
@@ -89,6 +66,8 @@ process genomegenerate {
 
     script:
     """
+    mkdir STARindex
+
     STAR --runMode genomeGenerate \\
     --genomeDir STARindex \\
     --genomeFastaFiles ${fasta} \\
@@ -117,12 +96,11 @@ process align {
     """
     STAR --genomeDir ${starindex} \\
     --readFilesIn ${trimmed} \\
-    --readFilesCommand zcat \\
     --outFileNamePrefix ${sample_id} \\
+    --readFilesCommand zcat \\
     --outFilterMultimapNmax 1 \\
     --outReadsUnmapped Fastx \\
-    --outSAMtype BAM SortedByCoordinate \\
-    --twopassMode Basic
+    --outSAMtype BAM SortedByCoordinate
     """
 }
 
@@ -168,8 +146,6 @@ process report {
     """
     multiqc . -f -n multiqc_report.html
     """
-
-
 }
 
 workflow {
