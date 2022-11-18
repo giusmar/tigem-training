@@ -23,4 +23,16 @@ RUN apt-get install -yqq wget curl gzip gawk bzip2 git libz-dev
 RUN apt-get install -yqq samtools bedtools bamtools
 
 # FASTQC
-RUN apt-get install -yqq fastqc multiqc bwa
+RUN apt-get install -yqq fastqc multiqc bwa cutadapt
+
+# TRIMGALORE
+RUN curl -fsSL https://github.com/FelixKrueger/TrimGalore/archive/0.6.7.tar.gz -o trim_galore.tar.gz
+RUN tar xvzf trim_galore.tar.gz
+RUN mv /TrimGalore-0.6.7/trim_galore /bin
+RUN rm -f trim_galore.tar.gz
+
+# STAR
+RUN git clone https://github.com/alexdobin/STAR.git
+RUN cd STAR/source && make STAR
+RUN cp /STAR/source/STAR /bin
+
