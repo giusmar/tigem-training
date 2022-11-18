@@ -189,6 +189,6 @@ workflow {
     //featurecounts()
 
     // Generate a single report with multiqc
-    // report(fastqc.out.qc.collect{ it[1][[1]] },align.out.aligned.collect{ it[1]} )
+    // report(fastqc.out.qc.collect{ it[1][[1]] },align.out.aligned.collect{ it[1] } )
 
 }
