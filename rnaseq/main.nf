@@ -96,7 +96,7 @@ process align {
     """
     STAR --genomeDir ${starindex} \\
     --readFilesIn ${trimmed} \\
-    --outFileNamePrefix ${sample_id} \\
+    --outFileNamePrefix ${sample_id}_ \\
     --readFilesCommand zcat \\
     --outFilterMultimapNmax 1 \\
     --outReadsUnmapped Fastx \\
@@ -109,21 +109,21 @@ process featurecounts {
     tag 'SUBREAD'
     publishDir "$params.outdir" , mode: 'copy',
     saveAs: {filename ->
-            if (filename.indexOf("sam") > 0)     "bwa/align/$filename"
+            if (filename.indexOf("txt") > 0)     "SUBREAD/featurecounts/$filename"
         else null            
     }
 
     input:
     path(ch_gtf)
+    path(bams)
 
 
     output:
     path("featureCounts_results.txt"), emit: txt
-    path("featureCounts_results.log"), emit: txt
 
     script:
     """
-    featureCounts -a ${ch_gtf} -o featureCounts_results.txt . 2> featureCounts_results.log
+    featureCounts -a ${ch_gtf} -o featureCounts_results.txt ${bams}
     """
 }
 
@@ -161,8 +161,7 @@ workflow {
     align(genomegenerate.out.starindex.collect(),trimming.out.trimmed)
 
     // Generate count matrix
-    align.out.sortedBam.view()
-    //featurecounts()
+    featurecounts(ch_gtf,align.out.sortedBam.collect{ it[1] })
 
     // Generate a single report with multiqc
     // report(fastqc.out.qc.collect{ it[1][[1]] },align.out.aligned.collect{ it[1] } )
