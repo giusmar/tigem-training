@@ -1,0 +1,9 @@
+sample_name	condition
+B4_WT_2	WT
+C4_WT_3	WT
+D4_WT_4	WT
+E4_GFP_1	GFP
+F4_GFP_2	GFP
+G4_GFP_3	GFP
+H4_GFP_4	GFP
+A4_WT_1	WT
