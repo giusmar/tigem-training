@@ -63,7 +63,7 @@ number_sequence
 number_sequence[1]
 char_sequence[1]
 
-view(iris)
+View(iris)
 head(iris)
 iris[1,5]
 
@@ -183,7 +183,7 @@ iris$greater.half <- iris$sepal.width > 0.5 * iris$sepal.length
 1 < 2
 1 <= 2
 1 > 2
-1 => 2
+1 >= 2
 
 ## With character
 "Hello" == "hello"
@@ -262,7 +262,7 @@ while (x <= 10) {
 print()
 print
 sum
-arg(print)
+args(print)
 help(print)
 ?print
 
